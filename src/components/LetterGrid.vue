@@ -3,7 +3,8 @@
     <LetterRow
       v-for="i in height"
       :key="i"
-      :word="rowContents[i - 1]"
+      :word="rowIsActive(i - 1) ? store.currentGuess : rowContents[i - 1]"
+      :rowIndex="i - 1"
       :length="width" />
   </div>
 </template>
@@ -11,6 +12,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import LetterRow from "./LetterRow.vue"
+import { store } from "@/store"
 
 export default defineComponent({
   components: { LetterRow },
@@ -27,6 +29,12 @@ export default defineComponent({
       required: true,
       type: Number,
     },
+  },
+  data() {
+    return { store }
+  },
+  methods: {
+    rowIsActive: (num: number) => num === store.guessCount,
   },
 })
 </script>

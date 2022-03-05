@@ -1,5 +1,6 @@
 <template>
   <div class="letter-row">
+    {{ rowIndex }}
     <LetterCell
       v-for="i in length"
       :key="i"
@@ -19,6 +20,10 @@ export default defineComponent({
       type: String,
     },
     length: {
+      required: true,
+      type: Number,
+    },
+    rowIndex: {
       required: true,
       type: Number,
     },
