@@ -1,4 +1,5 @@
 <template>
+  <NavHeader />
   <LetterGrid
     :rowContents="store.prevGuesses"
     :width="store.maxWordLength"
@@ -11,11 +12,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import LetterGrid from "./components/LetterGrid.vue"
+import NavHeader from "./components/NavHeader.vue"
 import { store } from "@/store"
 
 export default defineComponent({
   name: "App",
-  components: { LetterGrid },
+  components: { LetterGrid, NavHeader },
   mounted() {
     document.addEventListener("keydown", this.handleKey)
     store.newGame()
