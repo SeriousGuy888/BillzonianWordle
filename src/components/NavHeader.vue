@@ -17,7 +17,7 @@ nav {
   width: 100%;
   display: flex;
   flex-direction: row;
-  background-color: #414242;
+  background-color: #313131;
   justify-content: center;
   align-items: center;
   margin-bottom: 1rem;
