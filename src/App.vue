@@ -1,9 +1,9 @@
 <template>
   <LetterGrid
     :rowContents="store.prevGuesses"
-    :width="maxWordLength"
-    :height="maxGuessCount" />
-  <h2>Guess {{ store.guessCount }} of {{ maxGuessCount }}</h2>
+    :width="store.maxWordLength"
+    :height="store.maxGuessCount" />
+  <h2>Guess {{ store.guessCount }} of {{ store.maxGuessCount }}</h2>
   {{ store.currentGuess }}
   {{ store.targetWord }}
 </template>
@@ -16,19 +16,20 @@ import { store } from "@/store"
 export default defineComponent({
   name: "App",
   components: { LetterGrid },
-  created() {
-    window.addEventListener("keydown", this.handleKey)
+  mounted() {
+    document.addEventListener("keydown", this.handleKey)
+    store.newGame()
   },
   data() {
-    return {
-      maxGuessCount: 6,
-      maxWordLength: 5,
-      store,
-    }
+    return { store }
   },
   methods: {
     handleKey(event: KeyboardEvent) {
-      if(store.guessCount >= this.maxGuessCount)
+      if(store.isGameOver) {
+        store.newGame()
+        return
+      }
+      if(store.guessCount >= store.maxGuessCount)
         return
 
       switch(event.key) {
@@ -36,14 +37,14 @@ export default defineComponent({
           store.currentGuess = store.currentGuess.slice(0, store.currentGuess.length - 1)
           break
         case "Enter":
-          if(store.currentGuess.length < this.maxWordLength)
+          if(store.currentGuess.length < store.maxWordLength)
             break
           store.submitGuess()
           break
         default:
           if(event.key.length === 1
               && event.key.match(/[a-z]/i)
-              && store.currentGuess.length < this.maxWordLength)
+              && store.currentGuess.length < store.maxWordLength)
             store.currentGuess += event.key.toUpperCase()
           break
       }

@@ -1,5 +1,5 @@
 <template>
-  <div class="letter-cell">
+  <div class="letter-cell" :class="colourClass">
     {{ letter }}
   </div>
 </template>
@@ -12,8 +12,12 @@ export default defineComponent({
     letter: {
       required: false,
       type: String,
+    },
+    colourClass: {
+      required: true,
+      type: String,
     }
-  }
+  },
 })
 </script>
 
@@ -22,12 +26,25 @@ export default defineComponent({
   display: flex;
   border: 4px solid #747475;
   border-radius: 5%;
-  padding: 2rem;
+  padding: 0.5em;
   font-size: 3rem;
-  width: 3rem;
-  height: 3rem;
+  width: 1em;
+  height: 1em;
   justify-content: center;
   align-items: center;
   font-weight: bold;
+  background-color: transparent;
+}
+
+.grey {
+  background-color: #666;
+}
+.yellow {
+  background-color: #c2a61a;
+  border-color: #8b7507;
+}
+.green {
+  background-color: #538d4e;
+  border-color: #366632;
 }
 </style>
