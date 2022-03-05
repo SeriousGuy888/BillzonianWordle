@@ -27,12 +27,13 @@ export default defineComponent({
   },
   methods: {
     handleKey(event: KeyboardEvent) {
+      if(event.ctrlKey || event.altKey || event.shiftKey || event.metaKey)
+        return
+
       if(store.isGameOver) {
         store.newGame()
         return
       }
-      if(store.guessCount >= store.maxGuessCount)
-        return
 
       switch(event.key) {
         case "Backspace":
