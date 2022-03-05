@@ -4,9 +4,8 @@
       v-for="i in length"
       :key="i"
       :letter="word?.charAt(i - 1)"
-      :rowIndex="rowIndex"
-      :letterIndex="i - 1"
-      :colourClass="getCellColour(i - 1)" />
+      :colourClass="getCellColour(i - 1)"
+      :xIndex="i - 1" />
   </div>
 </template>
 
