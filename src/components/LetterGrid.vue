@@ -46,7 +46,7 @@ export default defineComponent({
   align-content: center;
   justify-content: center;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1vmin;
   user-select: none;
 }
 </style>

@@ -30,11 +30,13 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .letter-cell {
+  font-family: Gill Sans, Gill Sans MT, Calibri, sans-serif;
+
   display: flex;
-  border: 4px solid #747475;
+  border: 0.25vmin solid #747475;
   border-radius: 5%;
-  padding: 0.5em;
-  font-size: 3rem;
+  padding: 2vmin;
+  font-size: 7vmin;
   width: 1em;
   height: 1em;
   justify-content: center;
@@ -42,12 +44,12 @@ export default defineComponent({
   font-weight: bold;
   background-color: transparent;
 
+  $time: 1s;
+  transition: $time;
+  transition-delay: var(--delay);
   &.grey, &.yellow, &.green {
-    $time: 1s;
     animation: flip-cell $time ease-in;
-    transition: $time;
     animation-delay: var(--delay);
-    transition-delay: var(--delay);
   }
 
   &.grey {

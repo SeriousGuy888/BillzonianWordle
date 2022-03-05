@@ -60,7 +60,7 @@ export default defineComponent({
 .letter-row {
   display: flex;
   flex-direction: row;
-  gap: 1rem;
+  gap: 1vmin;
   align-self: center;
 }
 </style>
