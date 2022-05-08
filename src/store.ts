@@ -1,6 +1,11 @@
 import { reactive } from "vue";
 import wordlist from "./wordlist"
 
+interface CellColours {
+  [key: string]: ("" | "grey" | "yellow" | "green")
+}
+
+// https://www.raymondcamden.com/2019/10/16/using-indexeddb-with-vuejs
 export const store = reactive({
   maxGuessCount: 6,
   maxWordLength: 5,
@@ -8,8 +13,10 @@ export const store = reactive({
   guessCount: 0,
   currentGuess: "",
   prevGuesses: [] as string[],
+  letterColours: {} as CellColours,
   targetWord: "",
   submitGuess() {
+    
     if(this.currentGuess === this.targetWord) {
       alert("thu vik")
       this.isGameOver = true
@@ -19,8 +26,8 @@ export const store = reactive({
     this.currentGuess = ""
     this.guessCount++
 
-    if(this.guessCount >= this.maxGuessCount) {
-      alert("thu misvik")
+    if(!this.isGameOver && this.guessCount >= this.maxGuessCount) {
+      alert(`thu misvik - akrat word: "${this.targetWord}"`)
       this.isGameOver = true
     }
   },
@@ -29,6 +36,7 @@ export const store = reactive({
     this.guessCount = 0
     this.currentGuess = ""
     this.prevGuesses = []
+    this.letterColours = {}
     this.targetWord = this.getTargetWord()
   },
   getTargetWord() {

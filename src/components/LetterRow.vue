@@ -33,6 +33,21 @@ export default defineComponent({
   data() {
     return { store }
   },
+  mounted() {
+    if(!this.word)
+      return
+    for(let i in this.word.split("")) {
+      const inc = parseInt(i)
+      const letter = this.word.charAt(inc)
+      const col = this.getCellColour(inc)
+
+      const existingCol = store.letterColours[letter]
+      if(existingCol === "green" || col === "")
+        return
+      if(!existingCol || existingCol === "grey" || existingCol === "yellow" && col !== "grey")
+        store.letterColours[letter] = col
+    }
+  },
   methods: {
     getCellColour(letterIndex: number): ("" | "grey" | "yellow" | "green") {
       const letter = this.word?.charAt(letterIndex)

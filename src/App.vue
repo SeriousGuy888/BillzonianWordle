@@ -5,28 +5,34 @@
     :width="store.maxWordLength"
     :height="store.maxGuessCount" />
   <h2>Guess {{ store.guessCount }} of {{ store.maxGuessCount }}</h2>
-  {{ store.currentGuess }}
-  {{ store.targetWord }}
+  <!-- {{ store.targetWord }} -->
+
+  <VirtualKeyboard @type-key="typeKey" />
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue"
+import { store } from "@/store"
 import LetterGrid from "./components/LetterGrid.vue"
 import NavHeader from "./components/NavHeader.vue"
-import { store } from "@/store"
+import VirtualKeyboard from "./components/VirtualKeyboard.vue"
 
 export default defineComponent({
   name: "App",
-  components: { LetterGrid, NavHeader },
+  components: {
+    LetterGrid,
+    NavHeader,
+    VirtualKeyboard,
+  },
   mounted() {
-    document.addEventListener("keydown", this.handleKey)
+    document.addEventListener("keydown", this.handleKeyPress)
     store.newGame()
   },
   data() {
     return { store }
   },
   methods: {
-    handleKey(event: KeyboardEvent) {
+    handleKeyPress(event: KeyboardEvent) {
       if(event.ctrlKey || event.altKey || event.shiftKey || event.metaKey)
         return
 
@@ -34,8 +40,11 @@ export default defineComponent({
         store.newGame()
         return
       }
-
-      switch(event.key) {
+      
+      this.typeKey(event.key)
+    },
+    typeKey(key: string) {
+      switch(key) {
         case "Backspace":
           store.currentGuess = store.currentGuess.slice(0, store.currentGuess.length - 1)
           break
@@ -45,13 +54,13 @@ export default defineComponent({
           store.submitGuess()
           break
         default:
-          if(event.key.length === 1
-              && event.key.match(/[a-z]/i)
+          if(key.length === 1
+              && key.match(/[a-z]/i)
               && store.currentGuess.length < store.maxWordLength)
-            store.currentGuess += event.key.toUpperCase()
+            store.currentGuess += key.toUpperCase()
           break
       }
-    },
+    }
   },
 })
 </script>
