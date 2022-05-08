@@ -3,7 +3,7 @@
     <div class="keyboard-row" v-for="(row, i) in layout" v-bind:key="i">
       <div class="keyboard-key cell" :class="store.letterColours[letter] ?? ''" v-for="(letter, j) in row"
         v-bind:key="j" @click="typeKey(letter)">
-        {{ letter }}
+        {{ keyIcon(letter) }}
       </div>
     </div>
   </div>
@@ -16,7 +16,7 @@ import { store } from "@/store"
 const layout = [
   "Q W E R T Y U I O P",
   "A S D F G H J K L",
-  "Z X C V B N M",
+  "Z X C V B N M Enter Backspace",
 ]
 
 export default defineComponent({
@@ -30,8 +30,13 @@ export default defineComponent({
   methods: {
     typeKey(key: string) {
       this.$emit("type-key", key)
+    },
+    keyIcon(keyLetter: string) {
+      if(keyLetter === "Backspace") return "⬅"
+      if(keyLetter === "Enter") return "✓"
+      else return keyLetter
     }
-  }
+  },
 })
 </script>
 
